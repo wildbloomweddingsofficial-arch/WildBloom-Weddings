@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Luxury Venues — Wildbloom Weddings</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    :root{--cream:#FAF6F0;--blush:#F0E6DC;--rose:#B8836A;--rose-dark:#956655;--forest:#2E3D32;--gold:#C4A164;--charcoal:#1E1E1E;--muted:#7A7068;--white:#FFFFFF;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--cream);color:var(--charcoal);font-family:'Jost',sans-serif;font-weight:300;overflow-x:hidden;cursor:none;}
+    .c-dot{position:fixed;width:7px;height:7px;background:var(--rose);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:left .06s,top .06s;}
+    .c-ring{position:fixed;width:34px;height:34px;border:1px solid var(--rose);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .14s,top .14s,width .3s,height .3s,opacity .3s;opacity:.55;}
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:22px 64px;display:flex;align-items:center;justify-content:space-between;background:rgba(250,246,240,.97);backdrop-filter:blur(16px);box-shadow:0 2px 40px rgba(0,0,0,.06);}
+    .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;color:var(--forest);text-decoration:none;}.nav-logo em{font-style:italic;color:var(--gold);}
+    .nav-links{display:flex;gap:40px;list-style:none;}.nav-links a{text-decoration:none;color:var(--charcoal);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;position:relative;padding-bottom:3px;transition:color .3s;}.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--rose);transition:width .3s;}.nav-links a:hover::after,.nav-links a.active::after{width:100%;}.nav-links a:hover,.nav-links a.active{color:var(--rose);}
+    .nav-btn{border:1px solid var(--forest);color:var(--forest);padding:9px 26px;text-decoration:none;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;transition:all .3s;}.nav-btn:hover{background:var(--forest);color:var(--white);}
+    .hero{position:relative;height:100vh;min-height:600px;display:flex;align-items:flex-end;overflow:hidden;}
+    .hero-bg{position:absolute;inset:0;background-image:url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1800&q=85&fit=crop');background-size:cover;background-position:center;animation:hz 14s ease-out forwards;}
+    @keyframes hz{from{transform:scale(1.06);}to{transform:scale(1);}}
+    .hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(20,28,22,.9) 0%,rgba(20,28,22,.3) 55%,transparent 100%);}
+    .hero-content{position:relative;z-index:2;padding:0 64px 80px;width:100%;}
+    .breadcrumb{display:flex;align-items:center;gap:10px;font-size:.67rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:20px;}.breadcrumb a{color:rgba(255,255,255,.45);text-decoration:none;}.breadcrumb a:hover{color:var(--gold);}.breadcrumb span{color:var(--gold);}
+    .hero-eyebrow{font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:12px;margin-bottom:16px;opacity:0;animation:fadeUp .9s ease .2s forwards;}.hero-eyebrow::before{content:'';width:28px;height:1px;background:var(--gold);}
+    .hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3.5rem,7vw,7rem);font-weight:300;color:var(--white);line-height:1.04;margin-bottom:24px;opacity:0;animation:fadeUp .9s ease .4s forwards;}.hero-h1 em{font-style:italic;color:var(--gold);}
+    .hero-sub{font-size:.95rem;color:rgba(255,255,255,.65);max-width:560px;line-height:1.85;margin-bottom:40px;opacity:0;animation:fadeUp .9s ease .6s forwards;}
+    .hero-ctas{display:flex;gap:16px;align-items:center;opacity:0;animation:fadeUp .9s ease .8s forwards;}
+    .btn-gold{display:inline-block;background:var(--gold);color:var(--forest);padding:15px 44px;text-decoration:none;font-size:.73rem;letter-spacing:.2em;text-transform:uppercase;font-weight:500;transition:all .35s;}.btn-gold:hover{background:var(--white);transform:translateY(-3px);}
+    .btn-ghost{color:var(--white);text-decoration:none;font-size:.73rem;letter-spacing:.2em;text-transform:uppercase;display:flex;align-items:center;gap:10px;transition:gap .3s,color .3s;}.btn-ghost:hover{gap:18px;color:var(--gold);}
+    .eyebrow{font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--rose);display:flex;align-items:center;gap:12px;margin-bottom:20px;}.eyebrow::before{content:'';width:28px;height:1px;background:var(--rose);}
+    .reveal{opacity:0;transform:translateY(32px);transition:opacity .8s ease,transform .8s ease;}.reveal.vis{opacity:1;transform:none;}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:none;}}
+    .link-arrow{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--forest);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;transition:gap .3s,color .3s;}.link-arrow:hover{gap:18px;color:var(--rose);}
+
+    .intro-text{padding:88px 64px;background:var(--white);display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;}
+    .intro-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3vw,2.8rem);font-weight:300;color:var(--forest);line-height:1.15;margin-bottom:20px;}.intro-title em{font-style:italic;color:var(--rose);}
+    .body-text{font-size:.9rem;line-height:2;color:var(--muted);margin-bottom:18px;}
+
+    .venues-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;background:var(--cream);padding:4px;}
+    .venue-card{position:relative;overflow:hidden;height:480px;cursor:pointer;}
+    .venue-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .8s;}
+    .venue-card:hover img{transform:scale(1.07);}
+    .venue-grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(20,28,22,.85) 0%,transparent 55%);}
+    .venue-body{position:absolute;bottom:0;left:0;right:0;padding:28px 28px;}
+    .venue-loc{font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;display:block;}
+    .venue-name{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;color:var(--white);margin-bottom:4px;}
+    .venue-type{font-size:.75rem;color:rgba(255,255,255,.5);}
+    .venue-line{position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--gold);transition:width .5s;}
+    .venue-card:hover .venue-line{width:100%;}
+
+    .types-section{background:var(--forest);padding:88px 64px;}
+    .types-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3vw,2.8rem);font-weight:300;color:var(--white);line-height:1.15;margin-bottom:48px;}.types-title em{font-style:italic;color:var(--gold);}
+    .types-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+    .type-card{background:rgba(255,255,255,.05);padding:40px 32px;transition:background .3s;}.type-card:hover{background:rgba(255,255,255,.09);}
+    .type-icon{font-size:2rem;margin-bottom:16px;display:block;}
+    .type-name{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--white);margin-bottom:10px;}
+    .type-desc{font-size:.8rem;color:rgba(255,255,255,.45);line-height:1.75;}
+
+    .process-band{background:var(--blush);padding:80px 64px;}
+    .process-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3vw,2.6rem);font-weight:300;color:var(--forest);margin-bottom:48px;}.process-title em{font-style:italic;color:var(--rose);}
+    .process-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;}
+    .ps{padding:32px;background:var(--white);border-right:1px solid var(--blush);position:relative;}.ps:last-child{border-right:none;}
+    .ps-num{font-family:'Cormorant Garamond',serif;font-size:3.5rem;color:var(--blush);line-height:1;margin-bottom:14px;font-weight:300;}
+    .ps-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--forest);margin-bottom:8px;}
+    .ps-desc{font-size:.78rem;color:var(--muted);line-height:1.75;}
+
+    .cta-section{background:var(--cream);padding:100px 64px;text-align:center;}
+    .cta-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,4.5vw,4rem);font-weight:300;color:var(--forest);margin-bottom:20px;}.cta-title em{font-style:italic;color:var(--rose);}
+    .cta-sub{font-size:.9rem;color:var(--muted);line-height:1.9;margin-bottom:44px;max-width:500px;margin-left:auto;margin-right:auto;}
+    .cta-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+    .btn-forest{display:inline-block;background:var(--forest);color:var(--white);padding:15px 44px;text-decoration:none;font-size:.73rem;letter-spacing:.2em;text-transform:uppercase;transition:all .35s;}.btn-forest:hover{background:var(--rose);transform:translateY(-2px);}
+
+    footer{background:var(--charcoal);padding:64px 64px 28px;}
+    .footer-main{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:56px;margin-bottom:48px;}
+    .footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--white);text-decoration:none;display:block;margin-bottom:16px;}.footer-logo em{font-style:italic;color:var(--gold);}
+    .footer-about{font-size:.82rem;line-height:1.85;color:rgba(255,255,255,.35);margin-bottom:24px;}
+    .footer-socials{display:flex;gap:10px;}
+    .fs-link{width:36px;height:36px;border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.38);text-decoration:none;font-size:.75rem;transition:all .3s;}.fs-link:hover{border-color:var(--rose);color:var(--rose);}
+    .footer-col-title{font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;}
+    .footer-links{list-style:none;display:flex;flex-direction:column;gap:11px;}.footer-links a{text-decoration:none;color:rgba(255,255,255,.35);font-size:.82rem;transition:color .3s;}.footer-links a:hover{color:var(--rose);}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,.07);padding-top:24px;display:flex;justify-content:space-between;align-items:center;}
+    .footer-copy{font-size:.7rem;color:rgba(255,255,255,.22);}.footer-legal{display:flex;gap:24px;}.footer-legal a{text-decoration:none;color:rgba(255,255,255,.22);font-size:.7rem;}.footer-legal a:hover{color:var(--rose);}
+    .wa-btn{position:fixed;bottom:36px;right:36px;width:56px;height:56px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;font-size:1.5rem;text-decoration:none;z-index:500;box-shadow:0 6px 24px rgba(37,211,102,.4);transition:transform .3s;}.wa-btn:hover{transform:scale(1.12);}
+    @media(max-width:900px){nav{padding:16px 24px;}.nav-links,.nav-btn{display:none;}.hero-content{padding:0 24px 60px;}.intro-text{grid-template-columns:1fr;padding:52px 24px;}.venues-grid{grid-template-columns:1fr;}.venue-card{height:340px;}.types-section{padding:60px 24px;}.types-grid{grid-template-columns:1fr;}.process-band{padding:60px 24px;}.process-steps{grid-template-columns:1fr 1fr;}.ps{border-right:none;border-bottom:1px solid var(--blush);}.cta-section{padding:70px 24px;}footer{padding:48px 24px 24px;}.footer-main{grid-template-columns:1fr 1fr;gap:32px;}}
+  </style>
+</head>
+<body>
+<div class="c-dot" id="cdot"></div><div class="c-ring" id="cring"></div>
+<nav>
+  <a href="index.html" class="nav-logo">Wild<em>bloom</em> Weddings</a>
+  <ul class="nav-links"><li><a href="services.html" class="active">Services</a></li><li><a href="about.html">About</a></li><li><a href="destinations.html">Destinations</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="blog.html">Journal</a></li><li><a href="contact.html">Contact</a></li></ul>
+  <a href="contact.html" class="nav-btn">Plan Your Day</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-bg"></div><div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="breadcrumb"><a href="index.html">Home</a><span>/</span><a href="services.html">Services</a><span>/</span><span>Luxury Venues</span></div>
+    <div class="hero-eyebrow">Exclusive Access</div>
+    <h1 class="hero-h1">Luxury<br/><em>Venues</em></h1>
+    <p class="hero-sub">Eight years across Himachal Pradesh means privileged access to venues you won't find on any booking platform — from heritage estates to private mountain resorts.</p>
+    <div class="hero-ctas"><a href="contact.html" class="btn-gold">Find Your Venue</a><a href="services.html" class="btn-ghost">All Services →</a></div>
+  </div>
+</div>
+
+<div class="intro-text reveal">
+  <div>
+    <div class="eyebrow">Why It Matters</div>
+    <h2 class="intro-title">The venue is the<br/><em>soul of your event</em></h2>
+    <p class="body-text">The right venue doesn't just host your celebration — it becomes part of your story. A colonial-era veranda in Shimla at golden hour. A snow-framed resort in Manali with Himalayan peaks as the backdrop. A private apple orchard in Rohru, fragrant and intimate.</p>
+    <p class="body-text">After eight years working across all corners of Himachal Pradesh, we have relationships with over 40 venues — many of which are exclusive to our clients and unavailable anywhere online.</p>
+    <a href="contact.html" class="link-arrow" style="margin-top:8px;">Explore Venue Options →</a>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">
+    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=500&q=80&fit=crop" alt="Luxury venue" style="width:100%;height:280px;object-fit:cover;display:block;"/>
+    <img src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=500&q=80&fit=crop" alt="Mountain venue" style="width:100%;height:280px;object-fit:cover;display:block;"/>
+  </div>
+</div>
+
+<div class="venues-grid">
+  <div class="venue-card"><img src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=700&q=80&fit=crop" alt="Manali venue"/><div class="venue-grad"></div><div class="venue-body"><span class="venue-loc">Manali</span><div class="venue-name">Mountain Snow Estates</div><div class="venue-type">Luxury Resorts & Private Chalets</div></div><div class="venue-line"></div></div>
+  <div class="venue-card"><img src="https://images.unsplash.com/photo-1597074866923-dc0589150358?w=700&q=80&fit=crop" alt="Shimla venue"/><div class="venue-grad"></div><div class="venue-body"><span class="venue-loc">Shimla</span><div class="venue-name">Heritage Colonial Estates</div><div class="venue-type">British-era Bungalows & Manor Houses</div></div><div class="venue-line"></div></div>
+  <div class="venue-card"><img src="https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=700&q=80&fit=crop" alt="Kasauli venue"/><div class="venue-grad"></div><div class="venue-body"><span class="venue-loc">Kasauli</span><div class="venue-name">Pine-View Boutique Estates</div><div class="venue-type">Intimate Hillside Properties</div></div><div class="venue-line"></div></div>
+  <div class="venue-card"><img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=700&q=80&fit=crop" alt="Dharamshala venue"/><div class="venue-grad"></div><div class="venue-body"><span class="venue-loc">Dharamshala</span><div class="venue-name">Valley-View Luxury Retreats</div><div class="venue-type">Eco-Luxury & Wellness Venues</div></div><div class="venue-line"></div></div>
+  <div class="venue-card"><img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=700&q=80&fit=crop" alt="Rohru venue"/><div class="venue-grad"></div><div class="venue-body"><span class="venue-loc">Rohru</span><div class="venue-name">Private Apple Orchards</div><div class="venue-type">Exclusive Off-Market Estates</div></div><div class="venue-line"></div></div>
+  <div class="venue-card"><img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=700&q=80&fit=crop" alt="Palampur venue"/><div class="venue-grad"></div><div class="venue-body"><span class="venue-loc">Palampur</span><div class="venue-name">Tea Garden Estates</div><div class="venue-type">Scenic Plantation Properties</div></div><div class="venue-line"></div></div>
+</div>
+
+<div class="types-section">
+  <div class="reveal">
+    <div class="eyebrow" style="color:var(--gold);"><span style="width:28px;height:1px;background:var(--gold);display:inline-block;margin-right:12px;"></span>Venue Categories</div>
+    <h2 class="types-title">Every setting,<br/><em>perfectly matched to you</em></h2>
+  </div>
+  <div class="types-grid">
+    <div class="type-card reveal"><span class="type-icon">🏰</span><div class="type-name">Heritage Properties</div><p class="type-desc">Colonial-era bungalows, royal estates, and historic manor houses that carry a century of stories — now the setting for yours.</p></div>
+    <div class="type-card reveal"><span class="type-icon">🏔️</span><div class="type-name">Mountain Resorts</div><p class="type-desc">Premium luxury resorts with panoramic Himalayan views, world-class amenities, and enough space for grand celebrations.</p></div>
+    <div class="type-card reveal"><span class="type-icon">🌿</span><div class="type-name">Private Estates & Orchards</div><p class="type-desc">Exclusive off-market properties — apple orchards, tea gardens, and private farmhouses available only through Wildbloom.</p></div>
+  </div>
+</div>
+
+<div class="process-band reveal">
+  <div class="eyebrow">How We Match You</div>
+  <h2 class="process-title">Finding your <em>perfect venue</em></h2>
+  <div class="process-steps">
+    <div class="ps"><div class="ps-num">01</div><div class="ps-title">Tell Us Your Vision</div><p class="ps-desc">Share your date, guest count, aesthetic, and feel — and we'll shortlist venues that match perfectly.</p></div>
+    <div class="ps"><div class="ps-num">02</div><div class="ps-title">Curated Options</div><p class="ps-desc">We present 3–5 venues with full details, photos, pricing, and honest recommendations.</p></div>
+    <div class="ps"><div class="ps-num">03</div><div class="ps-title">Site Visits</div><p class="ps-desc">We coordinate visits to your shortlisted venues and accompany you to see the space firsthand.</p></div>
+    <div class="ps"><div class="ps-num">04</div><div class="ps-title">Booking & Beyond</div><p class="ps-desc">We handle the contract, negotiations, and all ongoing coordination with the venue team.</p></div>
+  </div>
+</div>
+
+<div class="cta-section reveal">
+  <div class="eyebrow" style="justify-content:center;">Find Your Setting</div>
+  <h2 class="cta-title">Let us find your<br/><em>perfect venue</em></h2>
+  <p class="cta-sub">Tell us your dream and we'll find a setting in Himachal Pradesh that exceeds it.</p>
+  <div class="cta-btns"><a href="contact.html" class="btn-forest">Start the Search</a><a href="services.html" class="link-arrow">Other Services →</a></div>
+</div>
+
+<footer>
+  <div class="footer-main">
+    <div><a href="index.html" class="footer-logo">Wild<em>bloom</em> Weddings</a><p class="footer-about">Crafting luxury destination weddings and celebrations in the hills of Himachal Pradesh.</p><div class="footer-socials"><a href="#" class="fs-link">f</a><a href="#" class="fs-link">in</a><a href="#" class="fs-link">📷</a><a href="#" class="fs-link">▶</a></div></div>
+    <div><div class="footer-col-title">Services</div><ul class="footer-links"><li><a href="service-destination-wedding.html">Destination Weddings</a></li><li><a href="service-ring-ceremony.html">Ring Ceremonies</a></li><li><a href="service-sangeet.html">Sangeet Nights</a></li><li><a href="service-luxury-venues.html">Luxury Venues</a></li><li><a href="service-corporate.html">Corporate Events</a></li></ul></div>
+    <div><div class="footer-col-title">Destinations</div><ul class="footer-links"><li><a href="destinations.html">Manali</a></li><li><a href="destinations.html">Shimla</a></li><li><a href="destinations.html">Kasauli</a></li><li><a href="destinations.html">Dharamshala</a></li><li><a href="destinations.html">Rohru</a></li><li><a href="destinations.html">Palampur</a></li></ul></div>
+    <div><div class="footer-col-title">Company</div><ul class="footer-links"><li><a href="about.html">About Us</a></li><li><a href="blog.html">Journal</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><span class="footer-copy">© 2025 Wildbloom Weddings · wildbloomweddings.com</span><div class="footer-legal"><a href="#">Privacy</a><a href="#">Terms</a></div></div>
+</footer>
+<a class="wa-btn" href="https://wa.me/919800000000" target="_blank">💬</a>
+<script>
+  const cdot=document.getElementById('cdot'),cring=document.getElementById('cring');
+  document.addEventListener('mousemove',e=>{cdot.style.left=e.clientX+'px';cdot.style.top=e.clientY+'px';cring.style.left=e.clientX+'px';cring.style.top=e.clientY+'px';});
+  document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>{cring.style.width='52px';cring.style.height='52px';cring.style.opacity='.28';});el.addEventListener('mouseleave',()=>{cring.style.width='34px';cring.style.height='34px';cring.style.opacity='.55';});});
+  const ro=new IntersectionObserver(e=>e.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');}),{threshold:.1});
+  document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+</script>
+</body>
+</html>
