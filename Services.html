@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Services — Wildbloom Weddings</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --cream: #FAF6F0; --blush: #F0E6DC; --rose: #B8836A;
+      --rose-dark: #956655; --forest: #2E3D32; --gold: #C4A164;
+      --charcoal: #1E1E1E; --muted: #7A7068; --white: #FFFFFF;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--cream); color: var(--charcoal); font-family: 'Jost', sans-serif; font-weight: 300; overflow-x: hidden; cursor: none; }
+
+    /* CURSOR */
+    .c-dot { position: fixed; width: 7px; height: 7px; background: var(--rose); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: left .06s, top .06s; }
+    .c-ring { position: fixed; width: 34px; height: 34px; border: 1px solid var(--rose); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: left .14s, top .14s, width .3s, height .3s, opacity .3s; opacity: .55; }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; padding: 22px 64px; display: flex; align-items: center; justify-content: space-between; background: rgba(250,246,240,0.97); backdrop-filter: blur(16px); box-shadow: 0 2px 40px rgba(0,0,0,0.06); }
+    .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 400; color: var(--forest); text-decoration: none; }
+    .nav-logo em { font-style: italic; color: var(--gold); }
+    .nav-links { display: flex; gap: 40px; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--charcoal); font-size: 0.72rem; letter-spacing: .2em; text-transform: uppercase; position: relative; padding-bottom: 3px; transition: color .3s; }
+    .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1px; background: var(--rose); transition: width .3s; }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+    .nav-links a:hover, .nav-links a.active { color: var(--rose); }
+    .nav-btn { border: 1px solid var(--forest); color: var(--forest); padding: 9px 26px; text-decoration: none; font-size: 0.72rem; letter-spacing: .2em; text-transform: uppercase; transition: all .3s; }
+    .nav-btn:hover { background: var(--forest); color: var(--white); }
+
+    /* PAGE HERO */
+    .page-hero { position: relative; height: 60vh; min-height: 480px; display: flex; align-items: center; overflow: hidden; }
+    .page-hero-bg { position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?w=1800&q=85&fit=crop'); background-size: cover; background-position: center 40%; }
+    .page-hero-overlay { position: absolute; inset: 0; background: linear-gradient(110deg, rgba(20,28,22,0.78) 0%, rgba(20,28,22,0.4) 100%); }
+    .page-hero-content { position: relative; z-index: 2; padding: 0 64px; }
+    .breadcrumb { display: flex; align-items: center; gap: 10px; font-size: 0.68rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 20px; }
+    .breadcrumb a { color: rgba(255,255,255,0.5); text-decoration: none; transition: color .3s; }
+    .breadcrumb a:hover { color: var(--gold); }
+    .breadcrumb span { color: var(--gold); }
+    .page-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 6vw, 5.5rem); font-weight: 300; color: var(--white); line-height: 1.06; }
+    .page-title em { font-style: italic; color: var(--gold); }
+    .page-subtitle { font-size: .95rem; color: rgba(255,255,255,.65); margin-top: 18px; max-width: 500px; line-height: 1.8; }
+
+    /* INTRO */
+    .intro-band { background: var(--forest); padding: 48px 64px; display: flex; justify-content: space-between; align-items: center; gap: 40px; }
+    .intro-band p { font-size: .9rem; line-height: 1.9; color: rgba(255,255,255,.6); max-width: 640px; }
+    .intro-band-right { display: flex; gap: 48px; flex-shrink: 0; }
+    .istat { text-align: center; }
+    .istat strong { font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; color: var(--gold); display: block; line-height: 1; }
+    .istat span { font-size: .65rem; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.4); }
+
+    /* SERVICES LIST */
+    .services-list { padding: 0; }
+    .svc-row {
+      display: grid; grid-template-columns: 1fr 1fr; min-height: 600px;
+      position: relative; overflow: hidden;
+    }
+    .svc-row:nth-child(even) { direction: rtl; }
+    .svc-row:nth-child(even) > * { direction: ltr; }
+    .svc-img-side { position: relative; overflow: hidden; }
+    .svc-img-side img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .9s ease; }
+    .svc-row:hover .svc-img-side img { transform: scale(1.05); }
+    .svc-img-num {
+      position: absolute; top: 32px; left: 32px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 5rem; font-weight: 300; color: rgba(255,255,255,.15);
+      line-height: 1; pointer-events: none;
+    }
+    .svc-row:nth-child(even) .svc-img-num { left: auto; right: 32px; }
+    .svc-text-side { background: var(--white); padding: 72px 72px; display: flex; flex-direction: column; justify-content: center; }
+    .svc-row:nth-child(even) .svc-text-side { background: var(--cream); }
+    .eyebrow { font-size: .68rem; letter-spacing: .3em; text-transform: uppercase; color: var(--rose); display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+    .eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--rose); }
+    .svc-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 3vw, 2.8rem); font-weight: 300; color: var(--forest); line-height: 1.15; margin-bottom: 20px; }
+    .svc-title em { font-style: italic; color: var(--rose); }
+    .svc-desc { font-size: .9rem; line-height: 2; color: var(--muted); margin-bottom: 32px; }
+    .svc-includes { margin-bottom: 36px; }
+    .svc-includes-title { font-size: .68rem; letter-spacing: .22em; text-transform: uppercase; color: var(--forest); font-weight: 500; margin-bottom: 14px; }
+    .svc-includes ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .svc-includes ul li { font-size: .84rem; color: var(--muted); display: flex; align-items: center; gap: 10px; }
+    .svc-includes ul li::before { content: '✦'; color: var(--gold); font-size: .55rem; flex-shrink: 0; }
+    .svc-cta-row { display: flex; gap: 16px; align-items: center; margin-top: auto; }
+    .btn-primary { display: inline-block; background: var(--rose); color: var(--white); padding: 15px 38px; text-decoration: none; font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; transition: all .35s; }
+    .btn-primary:hover { background: var(--rose-dark); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(184,131,106,.3); }
+    .btn-detail { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--forest); font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; transition: gap .3s, color .3s; }
+    .btn-detail:hover { gap: 18px; color: var(--rose); }
+
+    /* PROCESS */
+    .process-section { background: var(--blush); padding: 100px 64px; }
+    .process-header { text-align: center; margin-bottom: 72px; }
+    .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 3.5vw, 3rem); font-weight: 300; color: var(--forest); line-height: 1.15; }
+    .section-title em { font-style: italic; color: var(--rose); }
+    .process-steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; }
+    .process-step { background: var(--white); padding: 48px 36px; position: relative; overflow: hidden; }
+    .process-step::before { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--rose); transition: width .5s ease; }
+    .process-step:hover::before { width: 100%; }
+    .step-num { font-family: 'Cormorant Garamond', serif; font-size: 4rem; color: var(--blush); font-weight: 300; line-height: 1; margin-bottom: 20px; }
+    .step-title { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--forest); margin-bottom: 12px; }
+    .step-desc { font-size: .82rem; color: var(--muted); line-height: 1.8; }
+
+    /* CTA BANNER */
+    .cta-band { position: relative; height: 440px; display: flex; align-items: center; overflow: hidden; }
+    .cta-band-bg { position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1545579133-99bb5ad189be?w=1800&q=85&fit=crop'); background-size: cover; background-position: center; background-attachment: fixed; }
+    .cta-band-overlay { position: absolute; inset: 0; background: rgba(20,28,22,.75); }
+    .cta-band-content { position: relative; z-index: 2; padding: 0 64px; text-align: center; width: 100%; }
+    .cta-band-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.4rem, 4.5vw, 4rem); font-weight: 300; color: var(--white); margin-bottom: 20px; }
+    .cta-band-title em { font-style: italic; color: var(--gold); }
+    .cta-band-sub { font-size: .9rem; color: rgba(255,255,255,.6); margin-bottom: 40px; }
+    .btn-gold { display: inline-block; background: var(--gold); color: var(--forest); padding: 16px 48px; text-decoration: none; font-size: .75rem; letter-spacing: .22em; text-transform: uppercase; font-weight: 500; transition: all .35s; }
+    .btn-gold:hover { background: var(--white); transform: translateY(-3px); box-shadow: 0 12px 36px rgba(0,0,0,.25); }
+
+    /* FOOTER */
+    footer { background: var(--charcoal); padding: 64px 64px 28px; }
+    .footer-main { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 56px; margin-bottom: 48px; }
+    .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: var(--white); text-decoration: none; display: block; margin-bottom: 16px; }
+    .footer-logo em { font-style: italic; color: var(--gold); }
+    .footer-about { font-size: .82rem; line-height: 1.85; color: rgba(255,255,255,.35); margin-bottom: 24px; }
+    .footer-socials { display: flex; gap: 10px; }
+    .fs-link { width: 36px; height: 36px; border: 1px solid rgba(255,255,255,.12); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.38); text-decoration: none; font-size: .75rem; transition: all .3s; }
+    .fs-link:hover { border-color: var(--rose); color: var(--rose); }
+    .footer-col-title { font-size: .65rem; letter-spacing: .25em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+    .footer-links a { text-decoration: none; color: rgba(255,255,255,.35); font-size: .82rem; transition: color .3s; }
+    .footer-links a:hover { color: var(--rose); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,.07); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; }
+    .footer-copy { font-size: .7rem; color: rgba(255,255,255,.22); }
+    .footer-legal { display: flex; gap: 24px; }
+    .footer-legal a { text-decoration: none; color: rgba(255,255,255,.22); font-size: .7rem; transition: color .3s; }
+    .footer-legal a:hover { color: var(--rose); }
+
+    /* WA */
+    .wa-btn { position: fixed; bottom: 36px; right: 36px; width: 56px; height: 56px; border-radius: 50%; background: #25D366; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; text-decoration: none; z-index: 500; box-shadow: 0 6px 24px rgba(37,211,102,.4); transition: transform .3s; }
+    .wa-btn:hover { transform: scale(1.12); }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(32px); transition: opacity .8s ease, transform .8s ease; }
+    .reveal.vis { opacity: 1; transform: none; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
+    .anim-1 { opacity: 0; animation: fadeUp .9s ease .2s forwards; }
+    .anim-2 { opacity: 0; animation: fadeUp .9s ease .4s forwards; }
+    .anim-3 { opacity: 0; animation: fadeUp .9s ease .6s forwards; }
+
+    @media(max-width:900px) {
+      nav { padding: 16px 24px; }
+      .nav-links, .nav-btn { display: none; }
+      .page-hero-content { padding: 0 24px; }
+      .intro-band { flex-direction: column; padding: 48px 24px; }
+      .intro-band-right { gap: 32px; }
+      .svc-row { grid-template-columns: 1fr; min-height: auto; direction: ltr !important; }
+      .svc-img-side { height: 320px; }
+      .svc-text-side { padding: 48px 24px; }
+      .process-steps { grid-template-columns: 1fr 1fr; }
+      .process-section { padding: 70px 24px; }
+      .cta-band-content { padding: 0 24px; }
+      footer { padding: 48px 24px 24px; }
+      .footer-main { grid-template-columns: 1fr 1fr; gap: 32px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="c-dot" id="cdot"></div>
+<div class="c-ring" id="cring"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">Wild<em>bloom</em> Weddings</a>
+  <ul class="nav-links">
+    <li><a href="services.html" class="active">Services</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="destinations.html">Destinations</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="blog.html">Journal</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-btn">Plan Your Day</a>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content">
+    <div class="breadcrumb anim-1">
+      <a href="index.html">Home</a> <span>/</span> <span>Services</span>
+    </div>
+    <h1 class="page-title anim-2">Our <em>Services</em></h1>
+    <p class="page-subtitle anim-3">Five distinct ways we craft love, celebration and memory in the Himalayas — each one tailored entirely to you.</p>
+  </div>
+</div>
+
+<!-- INTRO BAND -->
+<div class="intro-band">
+  <p>From an intimate ring ceremony on a misty pine hillside to a grand destination wedding with 500 guests — every Wildbloom event is built from scratch around you. We bring together the finest venues, florals, cuisine, and talent across Himachal Pradesh to create something truly extraordinary.</p>
+  <div class="intro-band-right">
+    <div class="istat"><strong>250+</strong><span>Events Delivered</span></div>
+    <div class="istat"><strong>8+</strong><span>Years of Excellence</span></div>
+    <div class="istat"><strong>100%</strong><span>Happy Clients</span></div>
+  </div>
+</div>
+
+<!-- SERVICES LIST -->
+<div class="services-list">
+
+  <!-- 01 DESTINATION WEDDINGS -->
+  <div class="svc-row">
+    <div class="svc-img-side">
+      <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=900&q=85&fit=crop" alt="Destination Weddings"/>
+      <div class="svc-img-num">01</div>
+    </div>
+    <div class="svc-text-side reveal">
+      <div class="eyebrow">Our Signature Service</div>
+      <h2 class="svc-title">Destination<br/><em>Weddings</em></h2>
+      <p class="svc-desc">The crown jewel of what we do. A Wildbloom destination wedding is a fully immersive, multi-day celebration set against the spectacular landscapes of Himachal Pradesh. From the moment your guests arrive to the final farewell — every detail is orchestrated with precision and love.</p>
+      <div class="svc-includes">
+        <div class="svc-includes-title">What's Included</div>
+        <ul>
+          <li>Full venue scouting &amp; booking across Himachal</li>
+          <li>End-to-end décor — florals, lighting, draping &amp; staging</li>
+          <li>Catering curation — from traditional Himachali to global cuisine</li>
+          <li>Guest travel, accommodation &amp; logistics coordination</li>
+          <li>Photography &amp; videography team recommendations</li>
+          <li>Live music, DJ &amp; entertainment coordination</li>
+          <li>Dedicated on-day event manager</li>
+        </ul>
+      </div>
+      <div class="svc-cta-row">
+        <a href="service-destination-wedding.html" class="btn-primary">Explore in Detail</a>
+        <a href="contact.html" class="btn-detail">Get a Quote →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 RING CEREMONIES -->
+  <div class="svc-row">
+    <div class="svc-img-side">
+      <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=900&q=85&fit=crop" alt="Ring Ceremonies"/>
+      <div class="svc-img-num">02</div>
+    </div>
+    <div class="svc-text-side reveal">
+      <div class="eyebrow">The First Chapter</div>
+      <h2 class="svc-title">Ring<br/><em>Ceremonies</em></h2>
+      <p class="svc-desc">Your engagement is the beautiful beginning of everything. We design ring ceremonies that feel exactly right for you — intimate and warm, or grand and glamorous — set against Himachal's most enchanting backdrops. Every detail from the ring presentation setup to the last petal is considered.</p>
+      <div class="svc-includes">
+        <div class="svc-includes-title">What's Included</div>
+        <ul>
+          <li>Curated indoor &amp; outdoor venue selection</li>
+          <li>Signature floral &amp; décor design for the occasion</li>
+          <li>Ring presentation setup &amp; styling</li>
+          <li>Catering — from intimate high-tea to full banquet</li>
+          <li>Personalized invitations &amp; stationery design</li>
+          <li>Photography coordination</li>
+          <li>Guest experience &amp; welcome coordination</li>
+        </ul>
+      </div>
+      <div class="svc-cta-row">
+        <a href="service-ring-ceremony.html" class="btn-primary">Explore in Detail</a>
+        <a href="contact.html" class="btn-detail">Get a Quote →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 SANGEET -->
+  <div class="svc-row">
+    <div class="svc-img-side">
+      <img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=900&q=85&fit=crop" alt="Sangeet Nights"/>
+      <div class="svc-img-num">03</div>
+    </div>
+    <div class="svc-text-side reveal">
+      <div class="eyebrow">Joy & Celebration</div>
+      <h2 class="svc-title">Sangeet<br/><em>Nights</em></h2>
+      <p class="svc-desc">Sangeet is the night where the two families truly come together — and we make sure it's nothing short of spectacular. We craft sangeet evenings that are electric with energy, beautiful in décor, and alive with music and dance under the Himalayan sky.</p>
+      <div class="svc-includes">
+        <div class="svc-includes-title">What's Included</div>
+        <ul>
+          <li>Stage design, lighting rigs &amp; sound systems</li>
+          <li>Live band &amp; DJ curation</li>
+          <li>Dance floor setup &amp; LED installations</li>
+          <li>Themed décor &amp; draping</li>
+          <li>Multi-course dinner &amp; cocktail curation</li>
+          <li>Choreography referrals for family performances</li>
+          <li>Photobooths &amp; experiential entertainment</li>
+        </ul>
+      </div>
+      <div class="svc-cta-row">
+        <a href="service-sangeet.html" class="btn-primary">Explore in Detail</a>
+        <a href="contact.html" class="btn-detail">Get a Quote →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 04 LUXURY VENUES -->
+  <div class="svc-row">
+    <div class="svc-img-side">
+      <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=900&q=85&fit=crop" alt="Luxury Venues"/>
+      <div class="svc-img-num">04</div>
+    </div>
+    <div class="svc-text-side reveal">
+      <div class="eyebrow">Exclusive Access</div>
+      <h2 class="svc-title">Luxury<br/><em>Venues</em></h2>
+      <p class="svc-desc">After eight years working across Himachal Pradesh, we have privileged access to venues you simply won't find on any booking platform. From colonial-era heritage bungalows in Shimla and private apple orchards in Rohru, to riverside estates in Palampur and snow-view luxury resorts in Manali — we know them all.</p>
+      <div class="svc-includes">
+        <div class="svc-includes-title">What's Included</div>
+        <ul>
+          <li>Personalised venue matchmaking to your vision</li>
+          <li>Access to exclusive, off-market private estates</li>
+          <li>Site visits &amp; walkthrough coordination</li>
+          <li>Contract negotiation &amp; booking management</li>
+          <li>Venue layout &amp; capacity planning</li>
+          <li>Vendor coordination at the venue</li>
+          <li>Backup venue planning for weather events</li>
+        </ul>
+      </div>
+      <div class="svc-cta-row">
+        <a href="service-luxury-venues.html" class="btn-primary">Explore in Detail</a>
+        <a href="contact.html" class="btn-detail">Get a Quote →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 05 CORPORATE EVENTS -->
+  <div class="svc-row">
+    <div class="svc-img-side">
+      <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=900&q=85&fit=crop" alt="Corporate Events"/>
+      <div class="svc-img-num">05</div>
+    </div>
+    <div class="svc-text-side reveal">
+      <div class="eyebrow">Beyond Weddings</div>
+      <h2 class="svc-title">Corporate<br/><em>Events</em></h2>
+      <p class="svc-desc">The mountains have a way of inspiring people. We bring the same obsessive attention to detail that makes our weddings unforgettable to corporate retreats, product launches, award ceremonies, and executive off-sites. Himachal Pradesh is an extraordinary backdrop for your next milestone moment.</p>
+      <div class="svc-includes">
+        <div class="svc-includes-title">What's Included</div>
+        <ul>
+          <li>Corporate retreat &amp; off-site planning</li>
+          <li>Award nights &amp; gala dinner production</li>
+          <li>Conference &amp; seminar venue coordination</li>
+          <li>Team building experiences in nature</li>
+          <li>Executive accommodation &amp; transfer management</li>
+          <li>AV, staging &amp; production setup</li>
+          <li>Branding integration &amp; collateral coordination</li>
+        </ul>
+      </div>
+      <div class="svc-cta-row">
+        <a href="service-corporate.html" class="btn-primary">Explore in Detail</a>
+        <a href="contact.html" class="btn-detail">Get a Quote →</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- HOW WE WORK -->
+<div class="process-section">
+  <div class="process-header reveal">
+    <div class="eyebrow" style="justify-content:center;">How It Works</div>
+    <h2 class="section-title">Our Process</h2>
+  </div>
+  <div class="process-steps">
+    <div class="process-step reveal">
+      <div class="step-num">01</div>
+      <div class="step-title">Discovery Call</div>
+      <p class="step-desc">We begin with a warm, no-pressure conversation to understand your vision, dates, guest count, and the feeling you want to create.</p>
+    </div>
+    <div class="process-step reveal">
+      <div class="step-num">02</div>
+      <div class="step-title">Concept & Proposal</div>
+      <p class="step-desc">We craft a bespoke proposal with venue options, mood boards, a sample itinerary, and a transparent investment breakdown.</p>
+    </div>
+    <div class="process-step reveal">
+      <div class="step-num">03</div>
+      <div class="step-title">Planning & Design</div>
+      <p class="step-desc">Once confirmed, our team gets to work — coordinating every vendor, designing every element, and keeping you updated at every step.</p>
+    </div>
+    <div class="process-step reveal">
+      <div class="step-num">04</div>
+      <div class="step-title">Your Perfect Day</div>
+      <p class="step-desc">On the day, our team handles everything. You simply arrive, breathe in the mountain air, and enjoy every moment.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CTA BAND -->
+<div class="cta-band">
+  <div class="cta-band-bg"></div>
+  <div class="cta-band-overlay"></div>
+  <div class="cta-band-content reveal">
+    <div class="eyebrow" style="justify-content:center; color:var(--gold);">Ready to Begin?</div>
+    <h2 class="cta-band-title">Let's create something<br/><em>extraordinary</em> together</h2>
+    <p class="cta-band-sub">Every great celebration starts with a single conversation.</p>
+    <a href="contact.html" class="btn-gold">Start Planning</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-main">
+    <div>
+      <a href="index.html" class="footer-logo">Wild<em>bloom</em> Weddings</a>
+      <p class="footer-about">Crafting luxury destination weddings and celebrations in the breathtaking hills of Himachal Pradesh.</p>
+      <div class="footer-socials">
+        <a href="#" class="fs-link">f</a><a href="#" class="fs-link">in</a><a href="#" class="fs-link">📷</a><a href="#" class="fs-link">▶</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Services</div>
+      <ul class="footer-links">
+        <li><a href="service-destination-wedding.html">Destination Weddings</a></li>
+        <li><a href="service-ring-ceremony.html">Ring Ceremonies</a></li>
+        <li><a href="service-sangeet.html">Sangeet Nights</a></li>
+        <li><a href="service-luxury-venues.html">Luxury Venues</a></li>
+        <li><a href="service-corporate.html">Corporate Events</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Destinations</div>
+      <ul class="footer-links">
+        <li><a href="destinations.html">Manali</a></li><li><a href="destinations.html">Shimla</a></li>
+        <li><a href="destinations.html">Kasauli</a></li><li><a href="destinations.html">Dharamshala</a></li>
+        <li><a href="destinations.html">Rohru</a></li><li><a href="destinations.html">Palampur</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <ul class="footer-links">
+        <li><a href="about.html">About Us</a></li><li><a href="blog.html">Journal</a></li>
+        <li><a href="gallery.html">Gallery</a></li><li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 Wildbloom Weddings · wildbloomweddings.com</span>
+    <div class="footer-legal"><a href="#">Privacy</a><a href="#">Terms</a></div>
+  </div>
+</footer>
+
+<a class="wa-btn" href="https://wa.me/919800000000" target="_blank">💬</a>
+
+<script>
+  const cdot=document.getElementById('cdot'),cring=document.getElementById('cring');
+  document.addEventListener('mousemove',e=>{cdot.style.left=e.clientX+'px';cdot.style.top=e.clientY+'px';cring.style.left=e.clientX+'px';cring.style.top=e.clientY+'px';});
+  document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>{cring.style.width='52px';cring.style.height='52px';cring.style.opacity='.28';});el.addEventListener('mouseleave',()=>{cring.style.width='34px';cring.style.height='34px';cring.style.opacity='.55';});});
+  const ro=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');}),{threshold:.1});
+  document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+</script>
+</body>
+</html>4

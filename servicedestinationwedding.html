@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Destination Weddings — Wildbloom Weddings</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    :root{--cream:#FAF6F0;--blush:#F0E6DC;--rose:#B8836A;--rose-dark:#956655;--forest:#2E3D32;--gold:#C4A164;--charcoal:#1E1E1E;--muted:#7A7068;--white:#FFFFFF;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--cream);color:var(--charcoal);font-family:'Jost',sans-serif;font-weight:300;overflow-x:hidden;cursor:none;}
+    .c-dot{position:fixed;width:7px;height:7px;background:var(--rose);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:left .06s,top .06s;}
+    .c-ring{position:fixed;width:34px;height:34px;border:1px solid var(--rose);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .14s,top .14s,width .3s,height .3s,opacity .3s;opacity:.55;}
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:22px 64px;display:flex;align-items:center;justify-content:space-between;background:rgba(250,246,240,.97);backdrop-filter:blur(16px);box-shadow:0 2px 40px rgba(0,0,0,.06);}
+    .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;color:var(--forest);text-decoration:none;}
+    .nav-logo em{font-style:italic;color:var(--gold);}
+    .nav-links{display:flex;gap:40px;list-style:none;}
+    .nav-links a{text-decoration:none;color:var(--charcoal);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;position:relative;padding-bottom:3px;transition:color .3s;}
+    .nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--rose);transition:width .3s;}
+    .nav-links a:hover::after,.nav-links a.active::after{width:100%;}
+    .nav-links a:hover,.nav-links a.active{color:var(--rose);}
+    .nav-btn{border:1px solid var(--forest);color:var(--forest);padding:9px 26px;text-decoration:none;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;transition:all .3s;}
+    .nav-btn:hover{background:var(--forest);color:var(--white);}
+
+    /* HERO */
+    .hero{position:relative;height:100vh;min-height:600px;display:flex;align-items:flex-end;overflow:hidden;}
+    .hero-bg{position:absolute;inset:0;background-image:url('https://images.unsplash.com/photo-1519741497674-611481863552?w=1800&q=85&fit=crop');background-size:cover;background-position:center 35%;transform:scale(1.06);animation:hzoom 14s ease-out forwards;}
+    @keyframes hzoom{from{transform:scale(1.06);}to{transform:scale(1.0);}}
+    .hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(20,28,22,.9) 0%,rgba(20,28,22,.3) 60%,rgba(20,28,22,.1) 100%);}
+    .hero-content{position:relative;z-index:2;padding:0 64px 80px;width:100%;}
+    .breadcrumb{display:flex;align-items:center;gap:10px;font-size:.67rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:20px;}
+    .breadcrumb a{color:rgba(255,255,255,.45);text-decoration:none;transition:color .3s;}
+    .breadcrumb a:hover{color:var(--gold);}
+    .breadcrumb span{color:var(--gold);}
+    .hero-eyebrow{font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:12px;margin-bottom:16px;opacity:0;animation:fadeUp .9s ease .2s forwards;}
+    .hero-eyebrow::before{content:'';width:28px;height:1px;background:var(--gold);}
+    .hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3.5rem,7vw,7rem);font-weight:300;color:var(--white);line-height:1.04;margin-bottom:24px;opacity:0;animation:fadeUp .9s ease .4s forwards;}
+    .hero-h1 em{font-style:italic;color:var(--gold);}
+    .hero-sub{font-size:.95rem;color:rgba(255,255,255,.65);max-width:580px;line-height:1.85;margin-bottom:40px;opacity:0;animation:fadeUp .9s ease .6s forwards;}
+    .hero-ctas{display:flex;gap:16px;align-items:center;opacity:0;animation:fadeUp .9s ease .8s forwards;}
+    .btn-gold{display:inline-block;background:var(--gold);color:var(--forest);padding:15px 44px;text-decoration:none;font-size:.73rem;letter-spacing:.2em;text-transform:uppercase;font-weight:500;transition:all .35s;}
+    .btn-gold:hover{background:var(--white);transform:translateY(-3px);box-shadow:0 12px 36px rgba(0,0,0,.25);}
+    .btn-ghost{color:var(--white);text-decoration:none;font-size:.73rem;letter-spacing:.2em;text-transform:uppercase;display:flex;align-items:center;gap:10px;transition:gap .3s,color .3s;}
+    .btn-ghost:hover{gap:18px;color:var(--gold);}
+
+    /* OVERVIEW */
+    .overview{display:grid;grid-template-columns:1.1fr 1fr;gap:0;background:var(--white);}
+    .overview-text{padding:88px 72px;display:flex;flex-direction:column;justify-content:center;}
+    .eyebrow{font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--rose);display:flex;align-items:center;gap:12px;margin-bottom:20px;}
+    .eyebrow::before{content:'';width:28px;height:1px;background:var(--rose);}
+    .overview-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3vw,2.8rem);font-weight:300;color:var(--forest);line-height:1.15;margin-bottom:24px;}
+    .overview-title em{font-style:italic;color:var(--rose);}
+    .overview-body{font-size:.9rem;line-height:2;color:var(--muted);margin-bottom:20px;}
+    .overview-img{position:relative;overflow:hidden;min-height:560px;}
+    .overview-img img{width:100%;height:100%;object-fit:cover;display:block;}
+    .overview-badge{position:absolute;bottom:32px;left:32px;background:var(--forest);color:var(--white);padding:20px 28px;}
+    .overview-badge strong{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--gold);display:block;line-height:1;}
+    .overview-badge span{font-size:.65rem;letter-spacing:.16em;text-transform:uppercase;opacity:.6;margin-top:4px;display:block;}
+
+    /* GALLERY */
+    .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:280px 280px;gap:4px;}
+    .gallery-grid .gi{overflow:hidden;position:relative;}
+    .gallery-grid .gi:first-child{grid-row:span 2;}
+    .gallery-grid .gi img{width:100%;height:100%;object-fit:cover;transition:transform .7s ease;}
+    .gallery-grid .gi:hover img{transform:scale(1.07);}
+
+    /* INCLUDES */
+    .includes-section{display:grid;grid-template-columns:1fr 1fr;background:var(--cream);}
+    .includes-left{padding:88px 72px;background:var(--forest);}
+    .includes-right{padding:88px 72px;}
+    .includes-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3vw,2.6rem);font-weight:300;color:var(--white);line-height:1.15;margin-bottom:36px;}
+    .includes-title em{font-style:italic;color:var(--gold);}
+    .includes-list{display:flex;flex-direction:column;gap:16px;}
+    .include-item{display:flex;gap:16px;align-items:flex-start;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,.08);}
+    .include-item:last-child{border-bottom:none;padding-bottom:0;}
+    .include-icon{width:36px;height:36px;background:rgba(196,161,100,.15);border:1px solid rgba(196,161,100,.25);display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0;}
+    .include-text strong{display:block;font-size:.85rem;font-weight:500;color:var(--white);margin-bottom:3px;}
+    .include-text span{font-size:.78rem;color:rgba(255,255,255,.45);line-height:1.6;}
+    .packages-title{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;color:var(--forest);margin-bottom:28px;}
+    .package-card{background:var(--white);padding:32px;margin-bottom:16px;border-left:3px solid transparent;transition:border-color .3s,transform .3s;}
+    .package-card:hover{border-left-color:var(--rose);transform:translateX(4px);}
+    .package-name{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--forest);margin-bottom:6px;}
+    .package-guests{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--rose);margin-bottom:10px;display:block;}
+    .package-desc{font-size:.82rem;color:var(--muted);line-height:1.7;}
+
+    /* DESTINATIONS COVERED */
+    .dest-strip{background:var(--blush);padding:80px 64px;}
+    .dest-strip-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px;}
+    .dest-strip-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3vw,2.5rem);font-weight:300;color:var(--forest);}
+    .dest-strip-title em{font-style:italic;color:var(--rose);}
+    .dest-chips{display:flex;flex-wrap:wrap;gap:12px;}
+    .dest-chip{display:inline-flex;align-items:center;gap:10px;padding:14px 24px;background:var(--white);border:1px solid rgba(184,131,106,.2);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--forest);cursor:pointer;transition:all .3s;text-decoration:none;}
+    .dest-chip:hover{background:var(--rose);color:var(--white);border-color:var(--rose);}
+    .dest-chip span{font-size:.75rem;}
+
+    /* TESTIMONIAL */
+    .testi-feature{display:grid;grid-template-columns:1fr 1fr;min-height:480px;}
+    .testi-img-side{position:relative;overflow:hidden;}
+    .testi-img-side img{width:100%;height:100%;object-fit:cover;display:block;}
+    .testi-img-side::after{content:'';position:absolute;inset:0;background:rgba(20,28,22,.35);}
+    .testi-text-side{background:var(--forest);padding:72px 64px;display:flex;flex-direction:column;justify-content:center;}
+    .testi-q{font-family:'Cormorant Garamond',serif;font-size:4rem;color:var(--gold);opacity:.3;line-height:1;margin-bottom:16px;}
+    .testi-body{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-style:italic;color:var(--white);line-height:1.65;margin-bottom:32px;font-weight:300;}
+    .testi-author-name{font-size:.85rem;font-weight:500;color:var(--gold);}
+    .testi-author-loc{font-size:.72rem;color:rgba(255,255,255,.45);margin-top:4px;}
+
+    /* CTA */
+    .cta-section{background:var(--cream);padding:100px 64px;text-align:center;}
+    .cta-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,4.5vw,4rem);font-weight:300;color:var(--forest);margin-bottom:20px;}
+    .cta-title em{font-style:italic;color:var(--rose);}
+    .cta-sub{font-size:.9rem;color:var(--muted);line-height:1.9;margin-bottom:44px;max-width:520px;margin-left:auto;margin-right:auto;}
+    .cta-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+    .btn-forest{display:inline-block;background:var(--forest);color:var(--white);padding:15px 44px;text-decoration:none;font-size:.73rem;letter-spacing:.2em;text-transform:uppercase;transition:all .35s;}
+    .btn-forest:hover{background:var(--rose);transform:translateY(-2px);}
+    .link-arrow{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--forest);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;transition:gap .3s,color .3s;}
+    .link-arrow:hover{gap:18px;color:var(--rose);}
+
+    /* FOOTER */
+    footer{background:var(--charcoal);padding:64px 64px 28px;}
+    .footer-main{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:56px;margin-bottom:48px;}
+    .footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--white);text-decoration:none;display:block;margin-bottom:16px;}
+    .footer-logo em{font-style:italic;color:var(--gold);}
+    .footer-about{font-size:.82rem;line-height:1.85;color:rgba(255,255,255,.35);margin-bottom:24px;}
+    .footer-socials{display:flex;gap:10px;}
+    .fs-link{width:36px;height:36px;border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.38);text-decoration:none;font-size:.75rem;transition:all .3s;}
+    .fs-link:hover{border-color:var(--rose);color:var(--rose);}
+    .footer-col-title{font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;}
+    .footer-links{list-style:none;display:flex;flex-direction:column;gap:11px;}
+    .footer-links a{text-decoration:none;color:rgba(255,255,255,.35);font-size:.82rem;transition:color .3s;}
+    .footer-links a:hover{color:var(--rose);}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,.07);padding-top:24px;display:flex;justify-content:space-between;align-items:center;}
+    .footer-copy{font-size:.7rem;color:rgba(255,255,255,.22);}
+    .footer-legal{display:flex;gap:24px;}
+    .footer-legal a{text-decoration:none;color:rgba(255,255,255,.22);font-size:.7rem;transition:color .3s;}
+    .footer-legal a:hover{color:var(--rose);}
+    .wa-btn{position:fixed;bottom:36px;right:36px;width:56px;height:56px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;font-size:1.5rem;text-decoration:none;z-index:500;box-shadow:0 6px 24px rgba(37,211,102,.4);transition:transform .3s;}
+    .wa-btn:hover{transform:scale(1.12);}
+    .reveal{opacity:0;transform:translateY(32px);transition:opacity .8s ease,transform .8s ease;}
+    .reveal.vis{opacity:1;transform:none;}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:none;}}
+
+    @media(max-width:900px){
+      nav{padding:16px 24px;} .nav-links,.nav-btn{display:none;}
+      .hero-content{padding:0 24px 60px;}
+      .overview{grid-template-columns:1fr;} .overview-text{padding:52px 24px;} .overview-img{min-height:320px;}
+      .gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:200px 200px 200px;} .gallery-grid .gi:first-child{grid-row:span 1;}
+      .includes-section{grid-template-columns:1fr;} .includes-left,.includes-right{padding:52px 24px;}
+      .dest-strip{padding:60px 24px;} .dest-strip-header{flex-direction:column;gap:16px;align-items:flex-start;}
+      .testi-feature{grid-template-columns:1fr;} .testi-img-side{height:300px;} .testi-text-side{padding:48px 24px;}
+      .cta-section{padding:70px 24px;}
+      footer{padding:48px 24px 24px;} .footer-main{grid-template-columns:1fr 1fr;gap:32px;}
+    }
+  </style>
+</head>
+<body>
+<div class="c-dot" id="cdot"></div>
+<div class="c-ring" id="cring"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">Wild<em>bloom</em> Weddings</a>
+  <ul class="nav-links">
+    <li><a href="services.html" class="active">Services</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="destinations.html">Destinations</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="blog.html">Journal</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-btn">Plan Your Day</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="breadcrumb"><a href="index.html">Home</a><span>/</span><a href="services.html">Services</a><span>/</span><span>Destination Weddings</span></div>
+    <div class="hero-eyebrow">Our Signature Service</div>
+    <h1 class="hero-h1">Destination<br/><em>Weddings</em></h1>
+    <p class="hero-sub">Your love story deserves the grandest of stages — the breathtaking mountains, misty valleys, and heritage estates of Himachal Pradesh.</p>
+    <div class="hero-ctas">
+      <a href="contact.html" class="btn-gold">Plan Your Wedding</a>
+      <a href="services.html" class="btn-ghost">All Services →</a>
+    </div>
+  </div>
+</div>
+
+<!-- OVERVIEW -->
+<div class="overview">
+  <div class="overview-text reveal">
+    <div class="eyebrow">What We Offer</div>
+    <h2 class="overview-title">A wedding as <em>grand</em><br/>as the Himalayas</h2>
+    <p class="overview-body">A Wildbloom destination wedding is a fully immersive, multi-day celebration designed from the ground up around your unique love story. We handle every single element — from selecting the perfect mountain venue to ensuring every guest has a seamless, memorable experience.</p>
+    <p class="overview-body">Our deep roots across Himachal Pradesh mean you get access to venues, vendors, and experiences that simply aren't available anywhere else. Whether you dream of a snow-kissed ceremony in Manali, a heritage estate wedding in Shimla, or a private orchard celebration in Rohru — we make it happen, flawlessly.</p>
+    <a href="contact.html" class="link-arrow" style="margin-top:12px;">Begin Your Journey →</a>
+  </div>
+  <div class="overview-img">
+    <img src="https://images.unsplash.com/photo-1532712938310-34cb3982ef74?w=800&q=85&fit=crop" alt="Destination Wedding Himachal"/>
+    <div class="overview-badge"><strong>250+</strong><span>Weddings crafted</span></div>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<div class="gallery-grid">
+  <div class="gi"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=900&q=80&fit=crop" alt="Wedding ceremony"/></div>
+  <div class="gi"><img src="https://images.unsplash.com/photo-1606216794079-73ed1a5d2bbd?w=600&q=80&fit=crop" alt="Wedding decor"/></div>
+  <div class="gi"><img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=600&q=80&fit=crop" alt="Wedding venue"/></div>
+  <div class="gi"><img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=600&q=80&fit=crop" alt="Floral detail"/></div>
+</div>
+
+<!-- INCLUDES & PACKAGES -->
+<div class="includes-section">
+  <div class="includes-left reveal">
+    <div class="eyebrow" style="color:var(--gold);"><span style="width:28px;height:1px;background:var(--gold);display:inline-block;"></span>What's Included</div>
+    <h2 class="includes-title">Everything,<br/><em>taken care of</em></h2>
+    <div class="includes-list">
+      <div class="include-item"><div class="include-icon">🏔️</div><div class="include-text"><strong>Venue Scouting & Booking</strong><span>Full curation across all 6 Himachal destinations with site visits</span></div></div>
+      <div class="include-item"><div class="include-icon">💐</div><div class="include-text"><strong>Floral & Décor Design</strong><span>Signature wildbloom florals, lighting, draping, and staging</span></div></div>
+      <div class="include-item"><div class="include-icon">🍽️</div><div class="include-text"><strong>Catering Curation</strong><span>From traditional Himachali cuisine to global menus</span></div></div>
+      <div class="include-item"><div class="include-icon">🚌</div><div class="include-text"><strong>Guest Logistics</strong><span>Travel, accommodation, and transfers for all guests</span></div></div>
+      <div class="include-item"><div class="include-icon">📸</div><div class="include-text"><strong>Photography & Film</strong><span>Curated recommendations for top wedding photographers</span></div></div>
+      <div class="include-item"><div class="include-icon">🎵</div><div class="include-text"><strong>Entertainment</strong><span>Live music, DJ, performers, and sound coordination</span></div></div>
+      <div class="include-item"><div class="include-icon">⭐</div><div class="include-text"><strong>Dedicated Event Manager</strong><span>Your personal coordinator on every day of your celebration</span></div></div>
+    </div>
+  </div>
+  <div class="includes-right reveal">
+    <h3 class="packages-title">Our Wedding Packages</h3>
+    <div class="package-card">
+      <div class="package-name">Intimate Bloom</div>
+      <span class="package-guests">Up to 50 Guests</span>
+      <p class="package-desc">Perfect for intimate celebrations — a 2-day experience with full venue, décor, catering, and coordination included. Ideal for close family and friends in a boutique venue.</p>
+    </div>
+    <div class="package-card">
+      <div class="package-name">Grand Wildbloom</div>
+      <span class="package-guests">50–200 Guests</span>
+      <p class="package-desc">Our most popular package — a full multi-day wedding with all ceremonies, grand floral design, curated entertainment, and dedicated team of coordinators.</p>
+    </div>
+    <div class="package-card">
+      <div class="package-name">Royal Himalayan</div>
+      <span class="package-guests">200–500+ Guests</span>
+      <p class="package-desc">The ultimate Wildbloom experience. Grand-scale productions across premium venues with full guest management, bespoke design, and an entire event team at your service.</p>
+    </div>
+    <a href="contact.html" class="btn-forest" style="margin-top:8px;display:inline-block;">Request Custom Quote</a>
+  </div>
+</div>
+
+<!-- DESTINATIONS -->
+<div class="dest-strip reveal">
+  <div class="dest-strip-header">
+    <div>
+      <div class="eyebrow">Where We Celebrate</div>
+      <h2 class="dest-strip-title">We create weddings across<br/><em>all of Himachal Pradesh</em></h2>
+    </div>
+    <a href="destinations.html" class="link-arrow">Explore Destinations →</a>
+  </div>
+  <div class="dest-chips">
+    <a href="destinations.html" class="dest-chip"><span>🏔️</span> Manali</a>
+    <a href="destinations.html" class="dest-chip"><span>🌲</span> Shimla</a>
+    <a href="destinations.html" class="dest-chip"><span>🌸</span> Kasauli</a>
+    <a href="destinations.html" class="dest-chip"><span>🌿</span> Dharamshala</a>
+    <a href="destinations.html" class="dest-chip"><span>🍎</span> Rohru</a>
+    <a href="destinations.html" class="dest-chip"><span>🍵</span> Palampur</a>
+  </div>
+</div>
+
+<!-- TESTIMONIAL -->
+<div class="testi-feature">
+  <div class="testi-img-side">
+    <img src="https://images.unsplash.com/photo-1545579133-99bb5ad189be?w=800&q=85&fit=crop" alt="Happy couple"/>
+  </div>
+  <div class="testi-text-side reveal">
+    <div class="eyebrow" style="color:var(--gold);"><span style="width:28px;height:1px;background:var(--gold);display:inline-block;margin-right:12px;"></span>A Love Story</div>
+    <div class="testi-q">"</div>
+    <p class="testi-body">Our Manali wedding was everything we'd ever imagined and more. Wildbloom handled every single detail with such grace and precision. The floral arches, the candlelit dinner under the stars, the logistics for 300 guests — all of it, perfect. We didn't worry about a single thing.</p>
+    <div class="testi-author-name">Priya & Arjun Sharma</div>
+    <div class="testi-author-loc">Delhi · Grand Wildbloom Package · Manali, 2024</div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section reveal">
+  <div class="eyebrow" style="justify-content:center;">Your Turn</div>
+  <h2 class="cta-title">Ready to plan your<br/><em>dream wedding?</em></h2>
+  <p class="cta-sub">Every love story is unique. Let's craft yours together — with the Himalayas as your backdrop and Wildbloom by your side.</p>
+  <div class="cta-btns">
+    <a href="contact.html" class="btn-forest">Start Planning</a>
+    <a href="services.html" class="link-arrow">Other Services →</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-main">
+    <div>
+      <a href="index.html" class="footer-logo">Wild<em>bloom</em> Weddings</a>
+      <p class="footer-about">Crafting luxury destination weddings and celebrations in the hills of Himachal Pradesh.</p>
+      <div class="footer-socials"><a href="#" class="fs-link">f</a><a href="#" class="fs-link">in</a><a href="#" class="fs-link">📷</a><a href="#" class="fs-link">▶</a></div>
+    </div>
+    <div><div class="footer-col-title">Services</div><ul class="footer-links"><li><a href="service-destination-wedding.html">Destination Weddings</a></li><li><a href="service-ring-ceremony.html">Ring Ceremonies</a></li><li><a href="service-sangeet.html">Sangeet Nights</a></li><li><a href="service-luxury-venues.html">Luxury Venues</a></li><li><a href="service-corporate.html">Corporate Events</a></li></ul></div>
+    <div><div class="footer-col-title">Destinations</div><ul class="footer-links"><li><a href="destinations.html">Manali</a></li><li><a href="destinations.html">Shimla</a></li><li><a href="destinations.html">Kasauli</a></li><li><a href="destinations.html">Dharamshala</a></li><li><a href="destinations.html">Rohru</a></li><li><a href="destinations.html">Palampur</a></li></ul></div>
+    <div><div class="footer-col-title">Company</div><ul class="footer-links"><li><a href="about.html">About Us</a></li><li><a href="blog.html">Journal</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><span class="footer-copy">© 2025 Wildbloom Weddings · wildbloomweddings.com</span><div class="footer-legal"><a href="#">Privacy</a><a href="#">Terms</a></div></div>
+</footer>
+<a class="wa-btn" href="https://wa.me/919800000000" target="_blank">💬</a>
+<script>
+  const cdot=document.getElementById('cdot'),cring=document.getElementById('cring');
+  document.addEventListener('mousemove',e=>{cdot.style.left=e.clientX+'px';cdot.style.top=e.clientY+'px';cring.style.left=e.clientX+'px';cring.style.top=e.clientY+'px';});
+  document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>{cring.style.width='52px';cring.style.height='52px';cring.style.opacity='.28';});el.addEventListener('mouseleave',()=>{cring.style.width='34px';cring.style.height='34px';cring.style.opacity='.55';});});
+  const ro=new IntersectionObserver(e=>e.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');}),{threshold:.1});
+  document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+</script>
+</body>
+</html>
